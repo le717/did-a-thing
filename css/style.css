@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background-color: #e01414;
+  background-color: #C81010;
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   color: #fff;
@@ -31,7 +31,7 @@ label { margin-left: 0.5em; }
 input {
   border: none;
   border-bottom: 1px solid #fff;
-  background-color: #e01414;
+  background-color: #C81010;
   font-size: 2.9em;
   font-weight: 400;
   color: #fff;
