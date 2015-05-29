@@ -90,5 +90,15 @@
     updatePageTitle(name);
     makeShareLink(name);
     document.querySelector("header input").value = decodeName(name);
+
+    // Test for HTML5 audio compatibility, preferring MP3 audio
+    // Taken from http://diveintohtml5.info/everything.html#audio-mp3
+    var _a = document.createElement("audio");
+    var audioFile = (!!(_a.canPlayType && _a.canPlayType("audio/mpeg;").replace(/no/, ""))) ?
+        "audio/congratulations.mp3" : "audio/congratulations.ogg";
+
+    var congrats  = new Audio(audioFile);
+    congrats.load();
+    congrats.play();
   };
 }());
