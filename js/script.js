@@ -3,7 +3,6 @@
 (function() {
   "use strict";
   var originalTitle = document.title,
-      //            originalURL   = document.location.origin + "?name=",
       originalURL   = document.location.href.replace(document.location.search, "") + "?name=",
       QshareURL     = document.querySelector("section a"),
       decode        = {},
