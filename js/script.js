@@ -10,7 +10,7 @@
         " " : "%20",
         "&" : "%26",
         "'" : "%27",
-        "\"": "%22",
+        "\"": "%22"
       };
 
   // Create the decoding object
@@ -81,7 +81,7 @@
     var qs = window.location.search;
 
     // No query string was given
-    if (!/\?name=.+?$/.test(qs)) {
+    if (!/^\?name=.+?$/.test(qs)) {
       return false;
     }
 
