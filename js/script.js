@@ -4,59 +4,16 @@
   "use strict";
   var originalTitle = document.title,
       originalURL   = document.location.href.replace(document.location.search, "") + "?name=",
-      QshareURL     = document.querySelector("section a"),
-      decode        = {},
-      encode        = {
-        " " : "%20",
-        "&" : "%26",
-        "'" : "%27",
-        "\"": "%22"
-      };
+      qShareURL     = document.querySelector("section a");
 
-  // Create the decoding object
-  for (var k in encode) {
-    if (encode.hasOwnProperty(k)) {
-      decode[encode[k]] = k;
-    }
-  }
-
-  /**
-   * Encode URL escape characters in a person's name.
-   * @param {String} name The person's name.
-   * @returns {String}
-   */
-  function encodeName(name) {
-    for (var i = 0, len = name.length; i < len; i++) {
-      var letter = name[i];
-
-      if (encode[letter] !== undefined) {
-        name = name.replace(letter, encode[letter]);
-      }
-    }
-    return name;
-  }
-
-  /**
-   * Decode URL escape characters in a person's name.
-   * @param {String} name The person's name.
-   * @returns {String}
-   */
-  function decodeName(name) {
-    for (var k in decode) {
-      if (decode.hasOwnProperty(k)) {
-        name = name.replace(k, decode[k]);
-      }
-    }
-    return name;
-  }
 
   /**
    * Generate a sharing URL.
    * @param {String} name The person's name.
    */
   function makeShareLink(name) {
-    QshareURL.innerHTML = originalURL + decodeName(name);
-    QshareURL.href = originalURL + encodeName(name);
+    qShareURL.innerHTML = originalURL + decodeURIComponent(name);
+    qShareURL.href = originalURL + encodeURIComponent(name);
   }
 
   /**
@@ -64,12 +21,12 @@
    * @param {String} name The person's name.
    */
   function updatePageTitle(name) {
-    document.title = decodeName(name) + " " + originalTitle;
+    document.title = `${decodeURIComponent(name)} ${originalTitle}`;
   }
 
   // Initial setup of the share link
-  QshareURL.innerHTML = originalURL;
-  QshareURL.href = originalURL;
+  qShareURL.innerHTML = originalURL;
+  qShareURL.href = originalURL;
 
   // Update everything on keypress
   document.querySelector("header input").addEventListener("input", function() {
@@ -89,7 +46,7 @@
     var name = qs.split("=")[1];
     updatePageTitle(name);
     makeShareLink(name);
-    document.querySelector("header input").value = decodeName(name);
+    document.querySelector("header input").value = decodeURIComponent(name);
 
     // Test for HTML5 audio compatibility, preferring MP3 audio
     // Taken from http://diveintohtml5.info/everything.html#audio-mp3
@@ -97,7 +54,7 @@
     var audioFile = (!!(_a.canPlayType && _a.canPlayType("audio/mpeg;").replace(/no/, ""))) ?
         "audio/congratulations.mp3" : "audio/congratulations.ogg";
 
-    var congrats  = new Audio(audioFile);
+    var congrats = new Audio(audioFile);
     congrats.load();
     congrats.play();
   };
